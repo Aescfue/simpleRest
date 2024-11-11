@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  spring-app:
+    build:
+      context: ../demo
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:h2:mem:seriesdb
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.h2.Driver
+      SPRING_DATASOURCE_USERNAME: sa
+      SPRING_DATASOURCE_PASSWORD: password
+    networks:
+      - app-network
+
+  react-app:
+    build:
+      context: ../react/demo 
+      dockerfile: Dockerfile 
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
